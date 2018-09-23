@@ -32,9 +32,9 @@ class switch(pygame.sprite.Sprite):
         self.on_image = load_image('/home/pi/Pictures/Switch_1.jpg', -1)
         
         screen = pygame.display.get_surface()
-        self.area = screen.get_rect()
+        #self.area = screen.get_rect()
         print(str(loc))
-        self.rect.move_ip(loc)
+        self.rect.topleft = loc
         self.set_pin(pin)
     def set_pin(self,pin):
         self.pin = OutputDevice(pin)
@@ -67,14 +67,17 @@ def main():
 
     #Build switches and switch library
     sw_dict = {}
+    switch_group = pygame.sprite.Group()
+    
     for n in range(switch_num):
         m = n+1
-        sw_left = (10+50)*n+10
+        sw_left = (10+100)*n+10
         sw_top = 10
         sw_dict["SW_" + str(m)] = switch(pins[m],(sw_left,sw_top))
+        switch_group.add(sw_dict["SW_" + str(m)])
 
     #SW1 = switch()
-    switch_group = pygame.sprite.Group(sw_dict["SW_1"])
+    #switch_group = pygame.sprite.Group(sw_dict)
     
     RUN = True
     while RUN:
